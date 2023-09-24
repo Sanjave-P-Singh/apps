@@ -1,21 +1,29 @@
 import functions
 import PySimpleGUI as sg
 import time
+import os
+
+if not os.path.exists("todos.txt"):
+    with open("todos.txt", "w") as file:
+        pass
 
 sg.theme("DarkBlue8")
 
 clock = sg.Text('', key='clock', font=("Times New Roman", "15"))
 label = sg.Text("Type in a to-do: ", font=("Times New Roman", "15"))
 input_box = sg.InputText(tooltip="Enter a todo", key="todo", font=("Times New Roman", "15"))
-# add_button = sg.Button("Add",size = 10, font=("Times New Roman", "15"))
-add_button = sg.Button(size = 2, image_source="add.png", mouseover_colors="LightBlue2",
-                     tooltip="Add todo", key="Add")
+add_button = sg.Button("Add",size = 10, font=("Times New Roman", "15"))
+# add_button = sg.Button(size = 2, image_source="add.png", mouseover_colors="LightBlue2",
+#                    tooltip="Add todo", key="Add")
+
 edit_button = sg.Button("Edit", font=("Times New Roman", "15"))
 # edit_button = sg.Button(size=4, image_source="edit.png", mouseover_colors="LightBlue2",
 #                    tooltip="edit todo", key="Edit")
+
 complete_button = sg.Button("Complete", font=("Times New Roman", "15"))
 # complete_button = sg.Button(size=1, image_source="delete.png", mouseover_colors="LightBlue2",
 #                    tooltip="complete todo", key="Complete")
+
 exit_button = sg.Button("Exit", font=("Times New Roman", "15"))
 # exit_button = sg.Button(size=1, image_source="exit.png", mouseover_colors="LightBlue2",
 #                    tooltip="exit todo", key="Exit")
@@ -23,13 +31,18 @@ exit_button = sg.Button("Exit", font=("Times New Roman", "15"))
 list_box = sg.Listbox(values=functions.get_todos(), key='todos',
                       enable_events=True, size=[45, 10], font=("Times New Roman", "15"))
 
+col1 = sg.Column([[clock]])
+col2 = sg.Column([[label]])
+col3 = sg.Column([[input_box, add_button]])
+col4 = sg.Column([[list_box, edit_button, complete_button]])
+col5 = sg.Column([[exit_button]])
 
 window = sg.Window('My To-Do List Application',
-                   layout=[[clock],
-                           [label],
-                           [input_box, add_button],
-                           [list_box, edit_button, complete_button],
-                           [exit_button]],
+                   layout=[[col1],
+                           [col2],
+                           [col3],
+                           [col4],
+                           [col5]],
                    font=('Times New Roman', 15))
 while True:
     event, values = window.read(timeout=100)
@@ -75,4 +88,3 @@ while True:
             break
 
 window.close()
-
