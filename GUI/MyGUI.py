@@ -59,7 +59,7 @@ while True:
         case "Edit":
             try:
                 todo_to_edit = values['todos'][0]
-                new_todo = values['todo']
+                new_todo = values['todo'] + "\n"
 
                 todos = functions.get_todos()
                 index = todos.index(todo_to_edit)
